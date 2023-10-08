@@ -79,3 +79,64 @@ Calculating things about systick:
 ![7seg](resources/muxssd.png)
 
 Top FETs determine which digit is being displayed, bottom sink registers determine which segments are on
+
+# DAC - Digital to Analog Converter
+### Formula for Conversion from Digital to Analog
+$$ \boxed{DAC_{out} = V_{ref} * \frac{\text{Digital Value}}{2^n - 1}} $$
+
+Fixed Point Representation of Numbers
+
+$$ \overset{\boxed{128}}{\boxed{0}} \overset{\boxed{64}}{\boxed{1}} \overset{\boxed{32}}{\boxed{0}} \overset{\boxed{16}}{\boxed{1}} \overset{\boxed{8}}{\boxed{1}} \overset{\boxed{4}}{\boxed{1}} \overset{\boxed{2}}{\boxed{0}} \overset{\boxed{1}}{\boxed{1}} \text{ . } \overset{\boxed{1/2}}{\boxed{1}} \overset{\boxed{1/4}}{\boxed{0}} \overset{\boxed{1/8}}{\boxed{1}} \overset{\boxed{1/16}}{\boxed{0}} \overset{\boxed{1/32}}{\boxed{0}} \overset{\boxed{1/64}}{\boxed{0}} \overset{\boxed{1/128}}{\boxed{0}} \overset{\boxed{1/256}}{\boxed{0}}  = \text{93.525}$$
+
+*Note: Standard binary addition and subtraction works for fixed point numbers, but multiplication needs a corrective shift. Fixed-point is also INEXACT.*
+
+### Physical DAC Structure
+![dac](resources/dac.png)
+
+X_n is the digital input, which is fed from a NMOS/PMOS switch. The switch is controlled by the digital input. The output is the voltage at V_out.
+
+**Calculate acceptable error in DAC resistors:** $\text{Error} = \frac{1}{2^n - 1}$
+
+**Frequency of DAC:** $f_{DAC} = \frac{samples/sec}{\text{samples per cycle}}$
+
+### What can we use DAC for?
+- Slow things
+  - process control, etc.
+- DAC can be updated very quickly (100k+/sec)
+  - Audio, video, etc.
+
+# ADC: CT to DT Conversion
+
+### ADC Resolution:
+$$ \boxed{\text{ADC Out} = \text{round(}(2^{n} - 1) * \frac{V_{input}}{V_{REF}} \text{)}} $$
+
+### Example for 10-bit ADC, V_in = 1V, V_REF = 5V: 
+
+$\text{ADC Out} = \text{round(}(2^{10} - 1) * \frac{1}{5} \text{)} = \text{round(204.6) = 205 = 0xCD}$
+
+**Least significant bit voltage:** $\frac{V_{REF}}{2^n - 1}$
+- This is the smallest voltage change that the ADC can detect
+
+**Max quantization error:** $\frac{1}{2} * \frac{V_{REF}}{2^n - 1} = \frac{1}{2} * \text{LSB}$
+
+![quantization](resources/quant.png)
+
+### ADC Sampling Rate
+- **Nyquist Sampling Theorem:** Sampling rate must be at least twice the highest frequency component of the signal
+
+### ADC Structure
+- Successive Approximation Register (SAR) ADC
+![sar](resources/sar.png)
+
+Will start at MSB and work its way down to LSB, comparing the output of the DAC to the input voltage. If the DAC output is greater than the input voltage, then the bit is set to 0. If the DAC output is less than the input voltage, then the bit is set to 1.
+
+### Determine Minimum Sampling Time
+Want to settle to within 1/2 LSB (one max quantization error) of the input voltage.
+
+Has a sampling period, and then will repeatedly check if V_sample is higher/lower than V_dac, and adjust V_dac via setting bits accordingly.
+![converge](resources/converge.png)
+
+### Jitter
+- Jitter is the variation in the sampling period
+- Can be caused by noise, etc.
+- Can be reduced by averaging multiple samples via boxcar averaging
