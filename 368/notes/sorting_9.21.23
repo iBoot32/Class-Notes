@@ -1,0 +1,7 @@
+- merge sort:
+- divide sequence into two halves, merge sort each half, merge two sorted halves into one sorted sequence 
+- n*log(n) for all cases, O(n) space complexity
+
+
+quick sort
+- divide and conquer algorithm
