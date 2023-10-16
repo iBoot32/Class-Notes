@@ -332,3 +332,5 @@ Master can actually send a byte, follow up with another start bit, and then read
 ![stuff](resources/stretch.png)
 
 # This is the end of the notes for exam 1. Good luck!
+
+Helpful Quizlet I made based on these notes and homework solutions: https://quizlet.com/836266341/ece362-exam-1-purdue-flash-cards/
