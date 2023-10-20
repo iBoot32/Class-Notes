@@ -52,10 +52,15 @@ To remember:
 ```asm
     // C statement: g = h + A[8]
     // Assume g in h3, h in h2
-    lw a0, 32(a1) // get a[8] since (sizeof(int))= 4 -> 8 * 4 = 32
+    lw a0, 32(a1) // get a[8] since (sizeof(int))= 4 bytes -> 8 * 4 = 32 bytes
     add a3, a0, a2
 ```
+Recall the number 32(a1) is the offset in **BYTES**.
+
+So if we have an `int32_t` data type and want to access arr[16], we need to use `l2, a0, 64(a1)` since int32_t is 4 bytes. 64 bytes / 4 bytes = 16 $\checkmark$
 
 There are also unsigned, halfword, load byte, load word left, etc. instructions.
 
 If we have a 16-bit val and want to sign extend it, we take the most significant bit and copy it to the left. If we want to zero extend it, we just add 0s to the left.
+
+
