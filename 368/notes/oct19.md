@@ -61,6 +61,11 @@ Node* CW(Node *root) {
 }
 ```
 
+Another way to think about it:
+1. newroot is the left (make root)
+2. original root -> left is newroot -> right (build new root's right)
+3. new root -> right = oldroot (connect old root to new root)
+
 ### Time and Space Complexity
 Time complexity is dominated by the search 
 

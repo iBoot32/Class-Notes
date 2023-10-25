@@ -20,7 +20,7 @@ Now, `x12 = 30`
 Basically this `li` instruction is just a shortcut for `addi x10, x0, 10`.
 
 ### Addressing Mode
-An addressing mode basically defines how an instruction gets operand values. We have seen two: **Register addressing**: read value from a reg, and **Immediate addressing**: read value from a constant burned into the instruction. ISAs have separate instructions for accessing memory to keep the instruction set simple.
+An addressing mode basically defines how an instruction gets operand values. We have seen two: **Register addressing**: read value from a reg, and **Immediate addressing**: read value from a constant burned into the instruction. ISAs have separate instructions for accessing memory to keep the instruction set simple.***Example:*** `add x9, x20, x21`
 
 
 ### Some common architectures
