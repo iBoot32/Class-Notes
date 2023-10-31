@@ -36,8 +36,9 @@ Root of "joined" aka "correct" heap is `max(left_heap_value, right_heap_value, v
 
 ### Delete
 1. swap victim and end
-2. swap new end and root
-3. heapify root
+2. shrink by one
+3. swap new end and root
+4. heapify root
 
 ### Pseudocode
 ```c
