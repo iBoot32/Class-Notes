@@ -87,3 +87,13 @@ $$
 How does adding a new key work? If we add 42, we need to split the node. We take the middle value (47) and make it the new root. Then we take the left half and make it the left child, and the right half and make it the right child.
 
 ### Understand how insertion works!!!
+
+### `insert`:
+```
+void insert(int value)
+{
+    // find the leaf node where value should go
+    // if leaf node is full, split it
+    // if root is full, split it
+}
+```
